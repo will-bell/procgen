@@ -71,6 +71,9 @@ void Game::parse_options(std::string name, VecOptions opts) {
     opts.consume_int("debug_mode", &options.debug_mode);
     opts.consume_int("game_type", &game_type);
 
+    // path to domain configuration json file
+    opts.consume_string("domain_config_path", &options.domain_config_path);
+
     opts.ensure_empty();
 }
 

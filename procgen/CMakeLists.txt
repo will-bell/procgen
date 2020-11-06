@@ -50,6 +50,7 @@ add_library(env
   src/games/dodgeball.cpp
   src/games/bigfish.cpp
   src/games/bossfight.cpp
+  src/games/dc_bossfight.cpp
   src/games/caveflyer.cpp
   src/games/climber.cpp
   src/games/coinrun_old.cpp
@@ -70,6 +71,7 @@ add_library(env
   src/resources.cpp
   src/vecgame.cpp
   src/vecoptions.cpp
+  src/jsonreader/jsoncpp.cpp
 )
 
 # find libenv.h header

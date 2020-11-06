@@ -28,6 +28,7 @@ ENV_NAMES = [
     "ninja",
     "plunder",
     "starpilot",
+    "dc_bossfight"
 ]
 
 EXPLORATION_LEVEL_SEEDS = {
@@ -215,6 +216,7 @@ class ProcgenGym3Env(BaseProcgenEnv):
         use_generated_assets=False,
         paint_vel_info=False,
         distribution_mode="hard",
+        domain_config_path=None,
         **kwargs,
     ):
         assert (
@@ -233,6 +235,9 @@ class ProcgenGym3Env(BaseProcgenEnv):
             kwargs["start_level"] = EXPLORATION_LEVEL_SEEDS[env_name]
         else:
             distribution_mode = DISTRIBUTION_MODE_DICT[distribution_mode]
+        
+        if domain_config_path is None:
+            domain_config_path = "__use_default"
 
         options = {
                 "center_agent": bool(center_agent),
@@ -242,6 +247,7 @@ class ProcgenGym3Env(BaseProcgenEnv):
                 "use_backgrounds": bool(use_backgrounds),
                 "paint_vel_info": bool(paint_vel_info),
                 "distribution_mode": distribution_mode,
+                "domain_config_path": domain_config_path
             }
         super().__init__(num, env_name, options, **kwargs)
 
