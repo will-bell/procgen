@@ -66,7 +66,7 @@ class Domain:
         statement += '}'
         return statement
 
-    def update_config(self, parameters: Dict[str, Number], cache: bool = True):
+    def update_parameters(self, parameters: Dict[str, Number], cache: bool = True):
         if cache and self.path:
             # Cache the current state of the environment configuration before modifying it.
             # In the future, this should maintain some graph structure to see how the configuration branches throughout
