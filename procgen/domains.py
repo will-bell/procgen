@@ -155,7 +155,7 @@ class BossfightDomainConfig(DomainConfig):
     max_boss_bullet_velocity: float
     boss_rand_fire_prob: float
     boss_scale: float = 1.
-    
+
     def __init__(self,
                  min_n_rounds: int = 1,
                  max_n_rounds: int = 6,
