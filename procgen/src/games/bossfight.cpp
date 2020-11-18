@@ -2,6 +2,7 @@
 #include "../assetgen.h"
 #include <set>
 #include <queue>
+#include <iostream>
 
 const std::string NAME = "bossfight";
 
@@ -201,6 +202,7 @@ class BossfightGame : public BasicAbstractGame {
 
     void game_reset() override {
         BasicAbstractGame::game_reset();
+        std::cout << "Resetting Bossfight" << std::endl;
 
         damaged_until_time = 0;
         last_fire_time = 0;

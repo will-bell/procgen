@@ -204,6 +204,8 @@ class DCBossfightGame : public BasicAbstractGame {
     void game_reset() override {
         BasicAbstractGame::game_reset();
         
+        std::cout << "Resetting Bossfight" << std::endl;
+        
         Json::Reader reader;
         Json::Value root;
         std::ifstream ifile(options.domain_config_path);

@@ -19,6 +19,8 @@ class DomainConfig:
     Base class for configuring game parameters in Procgen
     """
 
+    game: str
+
     update_time: int
 
     _cache_name: str
@@ -32,8 +34,9 @@ class DomainConfig:
 
         self._cache_name = cache_name if cache_name is not None else 'cache-' + datetime_name()
 
-        self.cache_directory = None
+        self.game = ''
         self.path = None
+        self.cache_directory = None
 
     def __repr__(self) -> str:
         statement = f'{self.__class__.__name__} {{\n'
@@ -59,7 +62,11 @@ class DomainConfig:
         """
         return {k: v for k, v in self.__dict__.items() if k[0] != '_'}
 
-    def _to_json(self, path: str):
+    @property
+    def parameters(self) -> Dict[str, Any]:
+        return {k: v for k, v in self._json_data() if k not in ['game', 'path', 'cache_directory']}
+
+    def _to_json(self, path: Union[pathlib.Path, str]):
         """Write the configuration to a json file
 
         :param path: desired path for the json file
@@ -68,7 +75,7 @@ class DomainConfig:
         with open(str(path), 'w') as json_file:
             json.dump(self._json_data(), json_file)
 
-    def to_json(self, path: str):
+    def to_json(self, path: Union[pathlib.Path, str]):
         """Write the configuration to a json file and set the path for later use
 
         :param path: desired path for the json file
@@ -86,14 +93,14 @@ class DomainConfig:
             self._to_json(self.path)
 
     @classmethod
-    def from_json(cls, path: str) -> 'DomainConfig':
+    def from_json(cls, path: Union[pathlib.Path, str]) -> 'DomainConfig':
         """Load a configuration from a json file
 
         :param path: path to the json file containing the configuration parameters
         :return: configuration loaded from the file
         """
         obj = cls()
-        with open(path) as json_file:
+        with open(str(path)) as json_file:
             data = json.load(json_file)
             for key, value in data.items():
                 setattr(obj, key, value)
@@ -175,7 +182,7 @@ class BossfightDomainConfig(DomainConfig):
 
         super().__init__()
 
-        self.game = 'Bossfight'
+        self.game = 'dc_bossfight'
 
         self.min_n_rounds = min_n_rounds
         self.max_n_rounds = max_n_rounds
