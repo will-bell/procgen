@@ -225,7 +225,7 @@ class DCBossfightGame : public BasicAbstractGame {
         float config_boss_scale;
         if (reader.parse(ifile, root)) {
             if (root.isMember("game")) {
-                if (root["game"] != "Bossfight") {
+                if (root["game"] != "dc_bossfight") {
                     printf("Config provided is not for Bossfight");
                     exit(EXIT_FAILURE);
                 }
