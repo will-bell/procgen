@@ -64,7 +64,7 @@ class DomainConfig:
 
     @property
     def parameters(self) -> Dict[str, Any]:
-        return {k: v for k, v in self._json_data() if k not in ['game', 'path', 'cache_directory']}
+        return {k: v for k, v in self._json_data().items() if k not in ['game', 'path', 'cache_directory']}
 
     def _to_json(self, path: Union[pathlib.Path, str]):
         """Write the configuration to a json file
