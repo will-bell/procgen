@@ -202,7 +202,7 @@ class BossfightGame : public BasicAbstractGame {
 
     void game_reset() override {
         BasicAbstractGame::game_reset();
-        std::cout << "Resetting Bossfight" << std::endl;
+        // std::cout << "Resetting Bossfight" << std::endl;
 
         damaged_until_time = 0;
         last_fire_time = 0;
