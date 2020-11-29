@@ -334,7 +334,7 @@ class DCBossfightGame : public BasicAbstractGame {
     void boss_fire(float bullet_r, float vel, float theta) {
         auto new_bullet = add_entity(boss->x, boss->y, vel * cos(theta), vel * sin(theta), bullet_r, ENEMY_BULLET);
         new_bullet->image_theme = boss_laser_theme;
-        new_bullet->expire_time = 50;
+        new_bullet->expire_time = 200;
         new_bullet->vrot = PI / 8;
     }
 
