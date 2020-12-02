@@ -221,8 +221,10 @@ class DCBossfightGame : public BasicAbstractGame {
         int config_n_boss_attack_modes;
         float config_min_boss_bullet_velocity;
         float config_max_boss_bullet_velocity;
-        float config_boss_rand_fire_prob;
-        float config_boss_scale;
+        float config_min_boss_rand_fire_prob;
+        float config_max_boss_rand_fire_prob;
+        float config_min_boss_scale;
+        float config_max_boss_scale;
         if (reader.parse(ifile, root)) {
             if (root.isMember("game")) {
                 if (root["game"] != "dc_bossfight") {
@@ -263,11 +265,17 @@ class DCBossfightGame : public BasicAbstractGame {
             fassert(config_max_boss_bullet_velocity > 0 && config_max_boss_bullet_velocity <= 1);
             fassert(config_max_boss_invulnerable_duration >= config_min_boss_invulnerable_duration);
 
-            config_boss_rand_fire_prob = root["boss_rand_fire_prob"].asFloat();
-            fassert(config_boss_rand_fire_prob > 0 && config_boss_rand_fire_prob <= 1);
+            config_min_boss_rand_fire_prob = root["min_boss_rand_fire_prob"].asFloat();
+            config_max_boss_rand_fire_prob = root["max_boss_rand_fire_prob"].asFloat();
+            fassert(config_min_boss_rand_fire_prob > 0 && config_min_boss_rand_fire_prob <= 1);
+            fassert(config_max_boss_rand_fire_prob > 0 && config_max_boss_rand_fire_prob <= 1);
+            fassert(config_max_boss_rand_fire_prob >= config_min_boss_rand_fire_prob);
 
-            config_boss_scale = root["boss_scale"].asFloat();
-            fassert(config_boss_scale > 0);
+            config_min_boss_scale = root["min_boss_scale"].asFloat();
+            config_max_boss_scale = root["max_boss_scale"].asFloat();
+            fassert(config_min_boss_scale > 0.);
+            fassert(config_max_boss_scale > 0.);
+            fassert(config_max_boss_scale >= config_min_boss_scale);
         }
 
         damaged_until_time = 0;
@@ -278,7 +286,8 @@ class DCBossfightGame : public BasicAbstractGame {
         options.center_agent = false;
 
         // Scale the size of the boss by the desired amount
-        boss = add_entity(main_width / 2, main_height / 2, 0, 0, BOSS_R * config_boss_scale, BOSS);
+        float boss_scale = rand_gen.randrange(config_min_boss_scale, config_max_boss_scale);
+        boss = add_entity(main_width / 2, main_height / 2, 0, 0, BOSS_R * boss_scale, BOSS);
         choose_random_theme(boss);
         match_aspect_ratio(boss);
 
@@ -286,7 +295,7 @@ class DCBossfightGame : public BasicAbstractGame {
 
         boss_vel_timeout = BOSS_VEL_TIMEOUT;
         // Set the base probability of firing to the desired probability
-        base_fire_prob = config_boss_rand_fire_prob;
+        base_fire_prob = rand_gen.randrange(config_min_boss_rand_fire_prob, config_min_boss_rand_fire_prob);;
 
         // Randomly select the boss's health for each round and the number of rounds from ranges of integers
         round_health = config_min_boss_round_health + rand_gen.randn(config_max_boss_round_health - config_min_boss_round_health + 1);
@@ -295,7 +304,7 @@ class DCBossfightGame : public BasicAbstractGame {
 
         // Randomly select the boss's invulnerable duration from a range of integers
         invulnerable_duration = config_min_boss_invulnerable_duration + rand_gen.randn(config_max_boss_invulnerable_duration - config_min_boss_invulnerable_duration + 1);
-        vulnerable_duration = 500; // essentially infinite
+        vulnerable_duration = 1000; // essentially infinite
 
         choose_random_theme(agent);
 

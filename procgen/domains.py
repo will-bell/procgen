@@ -160,8 +160,10 @@ class BossfightDomainConfig(DomainConfig):
     n_boss_attack_modes: int
     min_boss_bullet_velocity: float
     max_boss_bullet_velocity: float
-    boss_rand_fire_prob: float
-    boss_scale: float = 1.
+    min_boss_rand_fire_prob: float
+    max_boss_rand_fire_prob: float
+    min_boss_scale: float = 1.
+    max_boss_scale: float = 1.
 
     def __init__(self,
                  min_n_rounds: int = 1,
@@ -177,8 +179,10 @@ class BossfightDomainConfig(DomainConfig):
                  n_boss_attack_modes: int = 4,
                  min_boss_bullet_velocity: float = .5,
                  max_boss_bullet_velocity: float = .75,
-                 boss_rand_fire_prob: float = .1,
-                 boss_scale: float = 1.):
+                 min_boss_rand_fire_prob: float = .1,
+                 max_boss_rand_fire_prob: float = .1,
+                 min_boss_scale: float = 1.,
+                 max_boss_scale: float = 1.):
 
         super().__init__()
 
@@ -197,5 +201,7 @@ class BossfightDomainConfig(DomainConfig):
         self.n_boss_attack_modes = n_boss_attack_modes
         self.min_boss_bullet_velocity = min_boss_bullet_velocity
         self.max_boss_bullet_velocity = max_boss_bullet_velocity
-        self.boss_rand_fire_prob = boss_rand_fire_prob
-        self.boss_scale = boss_scale
+        self.min_boss_rand_fire_prob = min_boss_rand_fire_prob
+        self.max_boss_rand_fire_prob = max_boss_rand_fire_prob
+        self.min_boss_scale = min_boss_scale
+        self.max_boss_scale = max_boss_scale

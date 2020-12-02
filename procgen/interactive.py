@@ -2,8 +2,11 @@
 import argparse
 
 from procgen import ProcgenGym3Env
+from procgen.domains import BossfightDomainConfig
 from .env import ENV_NAMES
 from gym3 import Interactive, VideoRecorderWrapper, unwrap
+import pathlib
+import datetime
 
 
 class ProcgenInteractive(Interactive):
@@ -46,6 +49,29 @@ def make_interactive(vision, record_dir, **kwargs):
     )
 
 
+INTERACTIVE_CONFIGS = {
+    'dc_bossfight': BossfightDomainConfig(min_n_rounds=3,
+                                          max_n_rounds=3,
+                                          min_n_barriers=3,
+                                          max_n_barriers=3,
+                                          min_boss_round_health=5,
+                                          max_boss_round_health=5,
+                                          min_boss_invulnerable_duration=1,
+                                          max_boss_invulnerable_duration=1,
+                                          n_boss_attack_modes=4,
+                                          min_boss_bullet_velocity=.2,
+                                          max_boss_bullet_velocity=.2,
+                                          min_boss_rand_fire_prob=.1,
+                                          max_boss_rand_fire_prob=.5,
+                                          min_boss_scale=.5,
+                                          max_boss_scale=1.)
+}
+
+
+def datetime_name():
+    return datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--vision", choices=["agent", "human"], default="human")
@@ -57,7 +83,7 @@ def main():
     )
     parser.add_argument(
         "--env-name",
-        default="coinrun",
+        default="dc_bossfight",
         help="name of game to create",
         choices=ENV_NAMES + ["coinrun_old"],
     )
@@ -66,7 +92,15 @@ def main():
     )
     args = parser.parse_args()
 
-    kwargs = {}
+    domain_config = INTERACTIVE_CONFIGS[args.env_name]
+    experiment_dir = pathlib.Path().absolute() / 'interactive_test_experiments' / ('experiment-' + datetime_name())
+    experiment_dir.mkdir(parents=True, exist_ok=False)
+    config_dir = experiment_dir / 'domain_configs'
+    config_dir.mkdir(parents=True, exist_ok=False)
+    test_domain_config_path = config_dir / 'test_config.json'
+    domain_config.to_json(test_domain_config_path)
+
+    kwargs = {"domain_config_path": str(test_domain_config_path)}
     if args.env_name != "coinrun_old":
         kwargs["distribution_mode"] = args.distribution_mode
     if args.level_seed is not None:
