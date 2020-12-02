@@ -205,3 +205,40 @@ class BossfightDomainConfig(DomainConfig):
         self.max_boss_rand_fire_prob = max_boss_rand_fire_prob
         self.min_boss_scale = min_boss_scale
         self.max_boss_scale = max_boss_scale
+
+
+BossfightEasyConfig = BossfightDomainConfig(
+    min_n_rounds=1,
+    max_n_rounds=5,
+    min_n_barriers=1,
+    max_n_barriers=3,
+    min_boss_round_health=1,
+    max_boss_round_health=9,
+    min_boss_invulnerable_duration=2,
+    max_boss_invulnerable_duration=3,
+    n_boss_attack_modes=4,
+    min_boss_bullet_velocity=.5,
+    max_boss_bullet_velocity=.5,
+    min_boss_rand_fire_prob=.1,
+    max_boss_rand_fire_prob=.1,
+    min_boss_scale=1.,
+    max_boss_scale=1.
+)
+
+BossfightHardConfig = BossfightDomainConfig(
+    min_n_rounds=1,
+    max_n_rounds=5,
+    min_n_barriers=1,
+    max_n_barriers=3,
+    min_boss_round_health=1,
+    max_boss_round_health=9,
+    min_boss_invulnerable_duration=2,
+    max_boss_invulnerable_duration=5,
+    n_boss_attack_modes=4,
+    min_boss_bullet_velocity=.75,
+    max_boss_bullet_velocity=.75,
+    min_boss_rand_fire_prob=.1,
+    max_boss_rand_fire_prob=.1,
+    min_boss_scale=1.,
+    max_boss_scale=1.
+)
