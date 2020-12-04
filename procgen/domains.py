@@ -166,8 +166,8 @@ class BossfightDomainConfig(DomainConfig):
     max_boss_scale: float = 1.
 
     def __init__(self,
-                 min_n_rounds: int = 1,
-                 max_n_rounds: int = 6,
+                 min_n_rounds: int = 3,
+                 max_n_rounds: int = 3,
 
                  min_n_barriers: int = 1,
                  max_n_barriers: int = 4,
@@ -208,8 +208,8 @@ class BossfightDomainConfig(DomainConfig):
 
 
 BossfightEasyConfig = BossfightDomainConfig(
-    min_n_rounds=1,
-    max_n_rounds=5,
+    min_n_rounds=3,
+    max_n_rounds=3,
     min_n_barriers=1,
     max_n_barriers=3,
     min_boss_round_health=1,
@@ -226,8 +226,8 @@ BossfightEasyConfig = BossfightDomainConfig(
 )
 
 BossfightHardConfig = BossfightDomainConfig(
-    min_n_rounds=1,
-    max_n_rounds=5,
+    min_n_rounds=3,
+    max_n_rounds=3,
     min_n_barriers=1,
     max_n_barriers=3,
     min_boss_round_health=1,
